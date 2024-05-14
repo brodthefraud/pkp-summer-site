@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraternity Website</title>
+</head>
+<body>
+    <h1>Welcome to the Fraternity Website</h1>
+    <h2>Summer Activities</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Title</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in activities_done %}
+            <tr>
+                <td>{{ activity.member }}</td>
+                <td>{{ activity.title }}</td>
+                <td>+{{ activity.points }} points</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Add New Activity</h2>
+    <form id="addActivityForm" action="/add_activity" method="POST">
+        <label for="title">Title:</label>
+        <select id="title" name="title" value="" required>
+            {% for activity in activities %}
+            <option value="{{ activity.title }}">{{ activity.title }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="member_type">Member Type:</label>
+        <input type="radio" id="alumni" name="member_type" value="Alumni" required>
+        <label for="alumni">Alumni</label>
+        <input type="radio" id="undergrad" name="member_type" value="Undergrad" required>
+        <label for="undergrad">Undergrad</label><br><br>
+        <!-- Dropdown for Alumni members -->
+        <div id="alumniMembers" style="display: none;">
+            <label for="alumniMember">Alumni Member:</label>
+            <select id="alumniMember" name="member_alumni" required>
+                {% for member in alumni_members %}
+                <option value="{{ member }}">{{ member }}</option>
+                {% endfor %}
+            </select><br><br>
+        </div>
+
+        <!-- Dropdown for Undergrad members -->
+        <div id="undergradMembers" style="display: none;">
+            <label for="undergradMember">Undergrad Member:</label>
+            <select id="undergradMember" name="member_undergrad" required>
+                {% for member in undergrad_members %}
+                <option value="{{ member }}">{{ member }}</option>
+                {% endfor %}
+            </select><br><br>
+        </div>
+
+        <!-- Additional fields for Hiking activity -->
+        <div id="additionalFieldsHiking" style="display: none;">
+            <label for="distance">Distance (miles):</label>
+            <input type="number" id="distance" name="distance" required><br><br>
+            
+            <label for="trail">Trail and/or Trailhead:</label>
+            <input type="text" id="trail" name="trail" required><br><br>
+            
+            <label for="location">Location (General):</label>
+            <input type="text" id="location" name="location" required><br><br>
+            
+            <label for="participants">Number of Participants:</label>
+            <input type="number" id="participants" name="participants" required><br><br>
+            
+            <label for="activeParticipants">Number of Active Participants:</label>
+            <input type="number" id="activeParticipants" name="activeParticipants" required><br><br>
+        </div>
+
+        
+        <input type="submit" value="Add Activity">
+    </form>    
+
+
+    <!-- Dynamic JavaScript code to show/hide additional fields based on activity selection -->
+    <script>
+        // Function to show/hide additional fields based on activity selection
+        function toggleFields() {
+            var activityDropdown = document.getElementById("title");
+            var hikingFields = document.getElementById("additionalFieldsHiking");
+
+            // Show/hide additional fields based on activity selection
+            if (activityDropdown.value === "Hiking") {
+                hikingFields.style.display = "block";
+            } else {
+                hikingFields.style.display = "none";
+            }
+        }
+
+        // Add event listener to activity dropdown
+        document.getElementById("title").addEventListener("change", toggleFields);
+
+
+        // Function to show/hide dropdown menus based on radio selection
+        function toggleMemberDropdown() {
+            var alumniRadio = document.getElementById("alumni");
+            var undergradRadio = document.getElementById("undergrad");
+            var alumniDropdown = document.getElementById("alumniMembers");
+            var undergradDropdown = document.getElementById("undergradMembers");
+            
+            // Show/hide dropdown menus based on radio selection
+            if (alumniRadio.checked) {
+                alumniDropdown.style.display = "block";
+                undergradDropdown.style.display = "none";
+            } else if (undergradRadio.checked) {
+                alumniDropdown.style.display = "none";
+                undergradDropdown.style.display = "block";
+            }
+        }
+        
+        // Add event listeners to radio buttons
+        document.getElementById("alumni").addEventListener("change", toggleMemberDropdown);
+        document.getElementById("undergrad").addEventListener("change", toggleMemberDropdown);
+    </script>
+</body>
+</html>
