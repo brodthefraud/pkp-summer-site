@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fraternity Website</title>
+    <title>PKP Fraternity Website</title>
+    <link href="./styles/styles.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to the Fraternity Website</h1>
+    <ul>
+        <li>
+            <a href="http://phipsi.stricklin.dev" title="Phi Kappa Psi">Phi Psi Alabama gamma></a>
+        </li>
+    </ul>
+    
     <h2>Summer Activities</h2>
     <table>
         <thead>
@@ -19,20 +25,20 @@
         <tbody>
             {% for activity in activities_done %}
             <tr>
-                <td>{{ activity.member }}</td>
-                <td>{{ activity.title }}</td>
-                <td>+{{ activity.points }} points</td>
+                <td>activity.member </td>
+                <td>activity.title</td>
+                <td>{{activity.points}} points</td>
             </tr>
-            {% endfor %}
+            endfor
         </tbody>
     </table>
     <h2>Add New Activity</h2>
     <form id="addActivityForm" action="/add_activity" method="POST">
         <label for="title">Title:</label>
         <select id="title" name="title" value="" required>
-            {% for activity in activities %}
-            <option value="{{ activity.title }}">{{ activity.title }}</option>
-            {% endfor %}
+        
+            <option value="{{ activity.title }}">activity.title</option>
+            
         </select><br><br>
         <label for="member_type">Member Type:</label>
         <input type="radio" id="alumni" name="member_type" value="Alumni" required>
@@ -44,7 +50,7 @@
             <label for="alumniMember">Alumni Member:</label>
             <select id="alumniMember" name="member_alumni" required>
                 {% for member in alumni_members %}
-                <option value="{{ member }}">{{ member }}</option>
+                <option value="{{ member }}">member</option>
                 {% endfor %}
             </select><br><br>
         </div>
@@ -74,7 +80,12 @@
             <input type="number" id="participants" name="participants" required><br><br>
             
             <label for="activeParticipants">Number of Active Participants:</label>
-            <input type="number" id="activeParticipants" name="activeParticipants" required><br><br>
+            <input type="number" id="activeParticipants" name="activeParticipants" required>
+            <br><br>
+
+            <label for="activity_type">Activity Name</label>
+            <input id="activtiy_type" name="activity_type" required/>
+            
         </div>
 
         
